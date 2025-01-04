@@ -18,11 +18,13 @@ def publier_tweet():
     while True:
         now = datetime.now()
         minutes = now.minute  # Récupère les minutes de l'heure
+        print(f"Vérification des minutes : {minutes}")  # Ajout du log pour voir l'heure des minutes
 
         # Vérifie si les minutes sont un multiple de 2
         if minutes % 2 == 0:
             heure = now.strftime("%H:%M:%S")
             tweet = f"Heure actuelle (minute paire) : {heure} 🕒"
+            print(f"Condition remplie, tweet à publier : {tweet}")  # Log du tweet qui va être posté
             
             try:
                 api.update_status(tweet)
