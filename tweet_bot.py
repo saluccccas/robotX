@@ -13,24 +13,25 @@ access_secret = os.getenv("TWITTER_ACCESS_SECRET")
 auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_secret)
 api = tweepy.API(auth)
 
-# Publier un tweet avec l'heure actuelle
+# Publier un tweet uniquement si les minutes sont un multiple de 2
 def publier_tweet():
     while True:
-        # Obtenir l'heure actuelle
         now = datetime.now()
-        heure = now.strftime("%H:%M:%S")
+        minutes = now.minute  # Récupère les minutes de l'heure
 
-        # Créer le tweet avec l'heure actuelle
-        tweet = f"Heure actuelle : {heure} 🕒"
+        # Vérifie si les minutes sont un multiple de 2
+        if minutes % 2 == 0:
+            heure = now.strftime("%H:%M:%S")
+            tweet = f"Heure actuelle (minute paire) : {heure} 🕒"
+            
+            try:
+                api.update_status(tweet)
+                print(f"Tweet posté : {tweet}")
+            except Exception as e:
+                print(f"Erreur lors de la publication : {e}")
         
-        try:
-            api.update_status(tweet)
-            print(f"Tweet posté : {tweet}")
-        except Exception as e:
-            print(f"Erreur lors de la publication : {e}")
-        
-        # Attendre 2 minutes avant de publier à nouveau
-        time.sleep(120)  # 120 secondes = 2 minutes
+        # Attendre 60 secondes avant de vérifier à nouveau
+        time.sleep(60)
 
 if __name__ == "__main__":
     publier_tweet()
