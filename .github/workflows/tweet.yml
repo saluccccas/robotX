@@ -2,7 +2,7 @@ name: Tweet Bot
 
 on:
   schedule:
-    - cron: "*/4 * * * *"  # Exécute toutes les 4minutes
+    - cron: "0 */3 * * *"  # Exécute toutes les 4minutes
   workflow_dispatch:  # Permet de lancer manuellement le workflow depuis l'interface GitHub
 
 jobs:
